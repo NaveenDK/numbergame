@@ -34,6 +34,7 @@ function playGame(){
   console.log("correct Number" + correctNumber);
   displayResult(numberGuess)
   saveGuessHistory(numberGuess)
+  displayHistory();
 }
 
 /**
@@ -93,7 +94,7 @@ function getRandomNumber(){
 function saveGuessHistory(guess) {
   // *CODE GOES BELOW HERE *
   guesses.push(guess);
-  console.log(guesses);
+  //console.log(guesses);
   return guesses;
 }
 
@@ -106,15 +107,18 @@ function saveGuessHistory(guess) {
  * HINT: use while loop and string concatentation to create a list of guesses
  */
 function displayHistory() {
-  let index; // TODO
+  let index=guesses.length-1;
   let list = "<ul class='list-group'>";
   // *CODE GOES BELOW HERE *
-  while(index<guesses.length){
-    list += "<li class='list-group-item'>"+ "You guessed" + guesses[index] + "</li>";
-    index+1;
-  }
+ while(index >=0){
+    list += "<li class = 'list-group-item' > " + 
+    "You guessed " + guesses[index] + "</li>";
+    index-=1;
+ }
   list += '</ul>'
+  console.log("Array of Guesses"+ guesses);
   document.getElementById("history").innerHTML = list;
+
 }
 
 
