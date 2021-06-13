@@ -14,9 +14,11 @@
 // Variable to store the list of guesses 
 
 // Variable for store the correct random number 
-
-
+let numberGuess;
+let correctNumber;
+let numberArray = [];
 window.onload = function() {
+    getRandomNumber();
     document.getElementById("number-submit").addEventListener("click", playGame);
     document.getElementById("restart-game").addEventListener("click", initGame)
 }
@@ -26,7 +28,14 @@ window.onload = function() {
  */
 function playGame(){
   // *CODE GOES BELOW HERE *
-}
+ 
+   numberGuess = document.getElementById("number-guess").value;
+
+   displayResult();
+   saveGuessHistory(numberGuess);
+   displayHistory();
+   //console.log(numberGuess);
+  }
 
 /**
  * Show the result for if the guess it too high, too low, or correct
@@ -42,6 +51,8 @@ function playGame(){
  */
 function initGame(){
   // *CODE GOES BELOW HERE *
+  getRandomNumber();
+  
 }
 
 /**
@@ -51,12 +62,33 @@ function resetResultContent(){
   document.getElementById("result").innerHTML = "";
 }
 
+function displayResult(){
+  console.log(correctNumber);
+  console.log(numberGuess);
+ 
+  if( correctNumber> numberGuess){
+     showNumberBelow();
+   
+   }
+   else if (correctNumber < numberGuess){
+     showNumberAbove();
+    
+
+   }
+   else if(correctNumber==numberGuess) {
+     showYouWon();
+   }
+
+
+}
 /**
  * Return a random number between 1 and 100
  * HINT: Use Math.random 
  */
 function getRandomNumber(){
   // *CODE GOES BELOW HERE *
+  correctNumber = Math.floor(Math.random()*100) +1;
+  //console.log(correctNumber)
 }
 
 /**
@@ -66,6 +98,9 @@ function getRandomNumber(){
  */
 function saveGuessHistory(guess) {
   // *CODE GOES BELOW HERE *
+  //console.log("save guess history "  +  guess)
+  numberArray.push(guess);
+  
 }
 
 /**
@@ -77,9 +112,17 @@ function saveGuessHistory(guess) {
  * HINT: use while loop and string concatentation to create a list of guesses
  */
 function displayHistory() {
-  let index; // TODO
+  let index=numberArray.length -1; // TODO index = 1, na 2
+  console.log(numberArray)
+ // console.log(numberArray[index])
   let list = "<ul class='list-group'>";
   // *CODE GOES BELOW HERE *
+   while( index >=0){  
+     // console.log("in the while loop " + numberArray[index])
+     list+= "<li class='list-group-item'>"+"You guessed " + numberArray[index] +"</li>";
+   index-=1;
+   }
+ 
   list += '</ul>'
   document.getElementById("history").innerHTML = list;
 }
@@ -112,8 +155,8 @@ function showYouWon(){
    * HINT: Use the 'won' and text parameters 
    */
   // *CODE GOES BELOW HERE *
-
-  document.getElementById("result").innerHTML = dialog;
+ 
+  document.getElementById("result").innerHTML =  getDialog("won",text);
 }
 
 function showNumberAbove(){
@@ -124,8 +167,8 @@ function showNumberAbove(){
    * HINT: Use the 'warning' and text parameters 
    */
   // *CODE GOES BELOW HERE *
-
-  document.getElementById("result").innerHTML = dialog;
+  //getDialog("warning",text);
+  document.getElementById("result").innerHTML =  getDialog("warning",text);
 }
 
 function showNumberBelow(){
@@ -136,6 +179,6 @@ function showNumberBelow(){
    * HINT: Use the 'warning' and text parameters 
    */
   // *CODE GOES BELOW HERE *
-
-  document.getElementById("result").innerHTML = dialog;
+  
+  document.getElementById("result").innerHTML = getDialog("warning",text);
 }
